@@ -55,6 +55,16 @@ describe('SidebarContent', () => {
       expect(screen.getByText(input[0].title)).toBeInTheDocument();
       expect(screen.getAllByRole('paragraph')).toHaveLength(input.length);
     });
+
+    it('deveria atualizar o campo de busca ao digitar', async () => {
+      const text = 'AI';
+      makeSut();
+      const searchInput = screen.getByPlaceholderText('Buscar prompts...');
+
+      await user.type(searchInput, text);
+
+      expect(searchInput).toHaveValue(text);
+    });
   });
 
   describe('Colapsar/Expandir', () => {
@@ -77,7 +87,6 @@ describe('SidebarContent', () => {
 
     it('deveria colapsar e mostrar o botão de expandir', async () => {
       makeSut();
-
       const collapseButton = screen.getByRole('button', {
         name: /Minimizar sidebar/i,
       });
@@ -88,7 +97,6 @@ describe('SidebarContent', () => {
         name: /expandir sidebar/i,
       });
       expect(expandButton).toBeInTheDocument();
-
       expect(collapseButton).not.toBeInTheDocument();
     });
   });
@@ -96,7 +104,6 @@ describe('SidebarContent', () => {
   describe('Novo Prompt', () => {
     it('deveria navegar o usuário para a página de novo prompt', async () => {
       makeSut();
-
       const newButton = screen.getByRole('button', { name: 'Novo Prompt' });
 
       await user.click(newButton);

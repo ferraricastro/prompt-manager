@@ -13,7 +13,9 @@ const inter = Inter({
   weight: ['400', '500', '700'],
 });
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased bg-gray-900 text-white`}>

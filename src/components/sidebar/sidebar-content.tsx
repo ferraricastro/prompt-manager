@@ -42,7 +42,7 @@ export const SidebarContent = ({ prompts }: SidebarContentProps) => {
 
   return (
     <aside
-      className={`border-r border-gray-700 felx flex-col h-full bg-gray-800 transition-[transform, width] duration-300 ease-in-out fixed md:relative left-0 top-0 z-50 md:z-auto w-[80vw] sm:w-[320px] ${isCollapsed ? 'md:w-18' : 'md:w-87'}`}
+      className={`border-r border-gray-700 flex flex-col h-full bg-gray-800 transition-[transform, width] duration-300 ease-in-out fixed md:relative left-0 top-0 z-50 md:z-auto w-[80vw] sm:w-[320px] ${isCollapsed ? 'md:w-18' : 'md:w-87'}`}
     >
       {isCollapsed && (
         <section className="px-2 py-6">
@@ -116,10 +116,14 @@ export const SidebarContent = ({ prompts }: SidebarContentProps) => {
               </Button>
             </div>
           </section>
+          <nav
+            className="flex-1 overflow-auto px-6 pb-6"
+            aria-label="Lista de prompts"
+          >
+            <PromptList prompts={prompts} />
+          </nav>
         </>
       )}
-
-      <PromptList prompts={prompts} />
     </aside>
   );
 };

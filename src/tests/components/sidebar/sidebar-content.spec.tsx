@@ -2,7 +2,7 @@ import {
   SidebarContent,
   SidebarContentProps,
 } from '@/components/sidebar/sidebar-content';
-import { render, screen } from '@/lib/test-utils';
+import { render, screen, waitFor } from '@/lib/test-utils';
 import { userEvent } from '@testing-library/user-event';
 
 const pushMock = jest.fn();
@@ -205,13 +205,13 @@ describe('SidebarContent', () => {
     });
   });
 
-  it('deveria iniciar o campo de busca com o search param', () => {
+  it('deveria iniciar o campo de busca com o search param', async () => {
     const text = 'initial';
     const searchParams = new URLSearchParams(`q=${text}`);
     mockSearchParams = searchParams;
     makeSut();
     const searchInput = screen.getByPlaceholderText('Buscar prompts...');
 
-    expect(searchInput).toHaveValue();
+    await waitFor(() => expect(searchInput).toHaveValue(text));
   });
 });

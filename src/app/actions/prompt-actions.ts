@@ -34,7 +34,7 @@ export async function searchPromptAction(
   } catch {
     return {
       success: false,
-      message: 'Falha ao buscar prompts',
+      message: 'Falha ao buscar prompts.',
     };
   }
 }

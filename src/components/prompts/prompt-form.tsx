@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { createPromptAction } from '@/app/actions/prompt-actions';
 import {
@@ -10,11 +10,11 @@ import {
 } from '@/core/application/prompts/create-prompt.dto';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { CopyButton } from '../button-actions';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { CopyButton } from '../button-actions';
 
 export const PromptForm = () => {
   const router = useRouter();
@@ -27,7 +27,10 @@ export const PromptForm = () => {
     },
   });
 
-  const content = form.watch('content');
+  const content = useWatch({
+    control: form.control,
+    name: 'content',
+  });
 
   const submit = async (data: CreatePromptDTO) => {
     const result = await createPromptAction(data);

@@ -9,6 +9,7 @@ import {
   createPromptSchema,
 } from '@/core/application/prompts/create-prompt.dto';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
@@ -29,9 +30,11 @@ export const PromptForm = () => {
     const result = await createPromptAction(data);
 
     if (!result.success) {
+      toast.error(result.message);
       return;
     }
 
+    toast.success(result.message);
     router.refresh();
   };
 

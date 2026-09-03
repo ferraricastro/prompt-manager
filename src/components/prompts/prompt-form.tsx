@@ -14,6 +14,7 @@ import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
+import { CopyButton } from '../button-actions';
 
 export const PromptForm = () => {
   const router = useRouter();
@@ -25,6 +26,8 @@ export const PromptForm = () => {
       content: '',
     },
   });
+
+  const content = form.watch('content');
 
   const submit = async (data: CreatePromptDTO) => {
     const result = await createPromptAction(data);
@@ -42,6 +45,7 @@ export const PromptForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submit)} className="space-y-6">
         <header className="flex flex-wrap gap-2 items-center mb-6 justify-end">
+          <CopyButton content={content} />
           <Button type="submit" size="sm">
             Salvar
           </Button>

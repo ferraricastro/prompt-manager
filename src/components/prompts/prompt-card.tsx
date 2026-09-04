@@ -29,19 +29,20 @@ export const PromptCard = ({ prompt }: PromptCardProps) => {
   const handleDelete = async () => {
     setIsDeleting(true);
 
-    try {
-      const result = await deletePromptAction(prompt.id);
-      if (!result.success) {
-        toast.error(result.message);
-      }
+    // try {
+    const result = await deletePromptAction(prompt.id);
+    // if (!result.success) {
+    //   toast.error(result.message);
+    // }
 
-      toast.success(result.message);
-    } catch (error) {
-      const _error = error as Error;
-      toast.error(_error.message);
-    } finally {
-      setIsDeleting(false);
-    }
+    toast[result.success ? 'success' : 'error'](result.message);
+    // toast.success(result.message);
+    // } catch (error) {
+    //   const _error = error as Error;
+    //   toast.error(_error.message);
+    // } finally {
+    setIsDeleting(false);
+    // }
   };
 
   return (

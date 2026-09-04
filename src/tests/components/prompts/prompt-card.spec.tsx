@@ -69,4 +69,15 @@ describe('PromptCard', () => {
 
     expect(toast.error).toHaveBeenCalledWith(errorMessage);
   });
+
+  it('deve exibir erro quando a action lançar uma exceção', async () => {
+    const errorMessage = 'Erro';
+    deleteMock.mockRejectedValueOnce(new Error(errorMessage));
+    render(<PromptCard prompt={prompt} />);
+
+    await user.click(screen.getByRole('button'));
+    await user.click(screen.getByRole('button', { name: 'Confirmar remoção' }));
+
+    expect(toast.error).toHaveBeenCalledWith(errorMessage);
+  });
 });

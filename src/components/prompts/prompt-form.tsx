@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import {
   createPromptAction,
   updatePromptAction,
-} from '@/app/actions/prompt-actions';
+} from '@/app/actions/prompt.actions';
 import {
   CreatePromptDTO,
   createPromptSchema,

@@ -1,6 +1,6 @@
 'use client';
 
-import { searchPromptAction } from '@/app/actions/prompt-actions';
+import { searchPromptAction } from '@/app/actions/prompt.actions';
 import { PromptSummary } from '@/core/domain/prompts/prompt.entity';
 import {
   Plus as AddIcon,

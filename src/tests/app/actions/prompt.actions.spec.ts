@@ -2,7 +2,7 @@ import {
   createPromptAction,
   searchPromptAction,
   updatePromptAction,
-} from '@/app/actions/prompt-actions';
+} from '@/app/actions/prompt.actions';
 
 jest.mock('@/lib/prisma', () => ({ prisma: {} }));
 

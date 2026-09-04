@@ -10,7 +10,7 @@ jest.mock('next/navigation', () => ({
 
 const createActionMock = jest.fn();
 const updateActionMock = jest.fn();
-jest.mock('@/app/actions/prompt-actions', () => ({
+jest.mock('@/app/actions/prompt.actions', () => ({
   createPromptAction: (...args: unknown[]) => createActionMock(...args),
   updatePromptAction: (...args: unknown[]) => updateActionMock(...args),
 }));

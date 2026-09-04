@@ -234,7 +234,7 @@ describe('Server Actions: Prompts', () => {
     });
   });
 
-  describe.only('DeletePromptAction', () => {
+  describe('DeletePromptAction', () => {
     it('deve remover com sucesso', async () => {
       mockedDeleteExecute.mockResolvedValue(undefined);
       const promptId = '1';

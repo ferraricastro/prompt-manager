@@ -5,7 +5,6 @@ import {
 import { render, screen } from '@/lib/test-utils';
 import userEvent from '@testing-library/user-event';
 import { toast } from 'sonner';
-import { success } from 'zod';
 
 const deleteMock = jest.fn();
 jest.mock('@/app/actions/prompt.actions', () => ({

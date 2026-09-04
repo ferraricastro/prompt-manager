@@ -7,8 +7,13 @@ import userEvent from '@testing-library/user-event';
 import { toast } from 'sonner';
 
 const deleteMock = jest.fn();
+const refreshMock = jest.fn();
 jest.mock('@/app/actions/prompt.actions', () => ({
   deletePromptAction: (id: string) => deleteMock(id),
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ refresh: refreshMock }),
 }));
 
 jest.mock('sonner', () => ({

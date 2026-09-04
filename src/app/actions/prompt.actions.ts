@@ -1,5 +1,7 @@
 'use server';
 
+import { prisma } from '@/lib/prisma';
+
 import {
   CreatePromptDTO,
   createPromptSchema,
@@ -14,7 +16,7 @@ import {
 import { UpdatePromptUseCase } from '@/core/application/prompts/update-prompt.use-case';
 import { PromptSummary } from '@/core/domain/prompts/prompt.entity';
 import { PrismaPromptRepository } from '@/infra/repository/prisma-prompt.repository';
-import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 import z from 'zod';
 
 type SearchFormState = {
@@ -26,8 +28,8 @@ type SearchFormState = {
 type FormState = {
   success: boolean;
   prompts?: PromptSummary[];
-  errors?: unknown;
   message?: string;
+  errors?: unknown;
 };
 
 export async function createPromptAction(
@@ -48,6 +50,7 @@ export async function createPromptAction(
     const repository = new PrismaPromptRepository(prisma);
     const useCase = new CreatePromptUseCase(repository);
     await useCase.execute(validated.data);
+    revalidatePath('/', 'layout');
   } catch (error) {
     const _error = error as Error;
     if (_error.message === 'PROMPT_ALREADY_EXISTS') {
@@ -87,6 +90,7 @@ export async function updatePromptAction(
     const repository = new PrismaPromptRepository(prisma);
     const useCase = new UpdatePromptUseCase(repository);
     await useCase.execute(validated.data);
+    revalidatePath('/', 'layout');
 
     return {
       success: true,
@@ -117,6 +121,7 @@ export async function deletePromptAction(id: string): Promise<FormState> {
     const repository = new PrismaPromptRepository(prisma);
     const useCase = new DeletePromptUseCase(repository);
     await useCase.execute(id);
+    revalidatePath('/', 'layout');
 
     return {
       success: true,
@@ -154,6 +159,7 @@ export async function searchPromptAction(
       title,
       content,
     }));
+
     return {
       success: true,
       prompts: summaries,

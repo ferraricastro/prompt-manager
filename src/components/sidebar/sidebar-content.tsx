@@ -173,7 +173,7 @@ export const SidebarContent = ({ prompts }: SidebarContentProps) => {
               <div>
                 <Button onClick={handleNewPrompt} className="w-full" size="lg">
                   <AddIcon className="w-5 h-5 mr-2" />
-                  Novo prompt
+                  Novo Prompt
                 </Button>
               </div>
             </section>

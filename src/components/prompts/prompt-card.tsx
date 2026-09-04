@@ -31,12 +31,7 @@ export const PromptCard = ({ prompt }: PromptCardProps) => {
 
     try {
       const result = await deletePromptAction(prompt.id);
-      if (!result.success) {
-        toast.error(result.message);
-      }
-
       toast[result.success ? 'success' : 'error'](result.message);
-      toast.success(result.message);
     } catch (error) {
       const _error = error as Error;
       toast.error(_error.message);

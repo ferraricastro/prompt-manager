@@ -1,12 +1,13 @@
 import { Sidebar } from '@/components/sidebar';
-import { Toaster } from '@/components/ui/sonner';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: 'Prompt Manager',
-  description: 'Gerencie seu prompts',
+  description: 'Gerencie seus prompts',
 };
 
 const inter = Inter({
@@ -17,20 +18,24 @@ const inter = Inter({
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
       <body
         className={`${inter.variable} antialiased bg-gray-900 text-white flex h-screen`}
       >
-        <Sidebar />
-        <main className="relative flex-1 overflow-auto min-w-0">
-          <div className="p-4 sm:p-6 md:p-8 max-w-full md:max-w-3xl mx-auto h-full">
-            {children}
-          </div>
-        </main>
+        <NuqsAdapter>
+          <Sidebar />
+          <main className="relative flex-1 overflow-auto min-w-0">
+            <div className="p-4 sm:p-6 md:p-8 max-w-full md:max-w-3xl mx-auto h-full">
+              {children}
+            </div>
+          </main>
 
-        <Toaster position="top-right" />
+          <Toaster position="top-right" />
+        </NuqsAdapter>
       </body>
     </html>
   );

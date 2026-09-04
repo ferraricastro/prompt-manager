@@ -2,7 +2,7 @@ import { SearchPromptsUseCase } from '@/core/application/prompts/search-prompts.
 import { Prompt } from '@/core/domain/prompts/prompt.entity';
 import { PromptRepository } from '@/core/domain/prompts/prompt.repository';
 
-describe('Search Prompt Use Case', () => {
+describe('SearchPromptsUseCase', () => {
   const input: Prompt[] = [
     {
       id: '1',
@@ -58,7 +58,7 @@ describe('Search Prompt Use Case', () => {
     };
 
     const useCase = new SearchPromptsUseCase(repositoryWithSpies);
-    const query = '  ';
+    const query = '   ';
 
     const results = await useCase.execute(query);
 
@@ -67,7 +67,7 @@ describe('Search Prompt Use Case', () => {
     expect(searchMany).not.toHaveBeenCalled();
   });
 
-  it('deve buscar termo com espaços em branco tratando com o trim', async () => {
+  it('deve buscar termo com espaços em branco, tratando com trim', async () => {
     const firstElement = input.slice(0, 1);
     const findMany = jest.fn().mockResolvedValue(input);
     const searchMany = jest.fn().mockResolvedValue(firstElement);
@@ -78,7 +78,7 @@ describe('Search Prompt Use Case', () => {
     };
 
     const useCase = new SearchPromptsUseCase(repositoryWithSpies);
-    const query = ' title 02 ';
+    const query = ' title 02  ';
 
     const results = await useCase.execute(query);
 

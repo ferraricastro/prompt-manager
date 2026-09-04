@@ -5,6 +5,7 @@ import {
 import { render, screen } from '@/lib/test-utils';
 import userEvent from '@testing-library/user-event';
 import { toast } from 'sonner';
+import { success } from 'zod';
 
 const deleteMock = jest.fn();
 jest.mock('@/app/actions/prompt.actions', () => ({
@@ -42,7 +43,7 @@ describe('PromptCard', () => {
 
   it('deveria remover com sucesso e exibir o toast', async () => {
     deleteMock.mockResolvedValue({
-      succes: true,
+      success: true,
       message: 'Prompt removido com sucesso!',
     });
     makeSut({ prompt });
@@ -52,5 +53,20 @@ describe('PromptCard', () => {
     await user.click(screen.getByRole('button', { name: 'Confirmar remoção' }));
 
     expect(toast.success).toHaveBeenCalledWith('Prompt removido com sucesso!');
+  });
+
+  it('deveria exibir erro quando a action falhar', async () => {
+    const errorMessage = 'Erro ao remover prompt';
+    deleteMock.mockResolvedValue({
+      success: false,
+      message: errorMessage,
+    });
+    makeSut({ prompt });
+
+    const deleteButton = screen.getByRole('button', { name: 'Remover Prompt' });
+    await user.click(deleteButton);
+    await user.click(screen.getByRole('button', { name: 'Confirmar remoção' }));
+
+    expect(toast.error).toHaveBeenCalledWith(errorMessage);
   });
 });

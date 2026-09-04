@@ -1,9 +1,11 @@
 'use client';
 
+import { deletePromptAction } from '@/app/actions/prompt.actions';
 import { PromptSummary } from '@/core/domain/prompts/prompt.entity';
 import { Trash as DeleteIcon, Loader2 as LoadingIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,6 +28,20 @@ export const PromptCard = ({ prompt }: PromptCardProps) => {
 
   const handleDelete = async () => {
     setIsDeleting(true);
+
+    try {
+      const result = await deletePromptAction(prompt.id);
+      if (!result.success) {
+        toast.error(result.message);
+      }
+
+      toast.success(result.message);
+    } catch (error) {
+      const _error = error as Error;
+      toast.error(_error.message);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -47,7 +63,6 @@ export const PromptCard = ({ prompt }: PromptCardProps) => {
               size="icon"
               title="Remover Prompt"
               aria-label="Remover Prompt"
-              onClick={() => setIsDeleting(true)}
             >
               <DeleteIcon className="w-3 h-3" />
             </Button>
@@ -66,6 +81,7 @@ export const PromptCard = ({ prompt }: PromptCardProps) => {
                 {isDeleting && (
                   <LoadingIcon className="mr-2 h-4 w-4 animate-spin" />
                 )}
+                Confirmar remoção
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
